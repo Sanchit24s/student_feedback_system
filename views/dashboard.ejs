@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+
+    <div class="container">
+        <h2>Welcome to Dashboard</h2>
+
+        <div class="dashboard-header">
+            <% if (locals.user && user.role==='student' ) { %>
+                <div class="action-buttons">
+                    <a href="/feedback/submit" class="btn btn-primary">Submit New Feedback</a>
+                </div>
+                <h3>Your Submitted Feedback</h3>
+                <% } else if (locals.user && user.role==='teacher' ) { %>
+                    <h3>All Student Feedback</h3>
+                    <% } %>
+        </div>
+
+        <% if (locals.error) { %>
+            <div class="error">
+                <%= error %>
+            </div>
+            <% } %>
+
+                <div class="feedback-list">
+                    <% if (locals.feedback && feedback.length> 0) { %>
+                        <% feedback.forEach(item=> { %>
+                            <div class="feedback-card">
+                                <div class="feedback-header">
+                                    <h4>Course: <%= item.course %>
+                                    </h4>
+                                    <div class="rating">
+                                        <span>Rating: <%= '⭐' .repeat(item.rating) %></span>
+                                        <span class="rating-number">(<%= item.rating %>/5)</span>
+                                    </div>
+                                </div>
+                                <div class="feedback-content">
+                                    <p><strong>Comment:</strong>
+                                        <%= item.comment %>
+                                    </p>
+                                    <small>Submitted by: <%= item.username %></small>
+                                    <small class="date">on <%= new Date(item.created_at).toLocaleString() %></small>
+                                </div>
+                            </div>
+                            <% }); %>
+                                <% } else { %>
+                                    <div class="no-feedback">
+                                        <p>No feedback available yet.</p>
+                                        <% if (locals.user && user.role==='student' ) { %>
+                                            <a href="/feedback/submit" class="btn btn-primary">Submit Your First
+                                                Feedback</a>
+                                            <% } %>
+                                    </div>
+                                    <% } %>
+                </div>
+    </div>
+
+    <%- include('partials/footer') %>

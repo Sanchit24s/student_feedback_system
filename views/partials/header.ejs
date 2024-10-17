@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Feedback System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <% if (locals.user) { %>
+        <nav class="navbar">
+            <div class="container">
+                <a href="/feedback/dashboard">Dashboard</a>
+                <% if (user.role==='student' ) { %>
+                    <a href="/feedback/submit">Submit Feedback</a>
+                    <% } %>
+                        <span>Welcome, <%= user.username %></span>
+                        <a href="/auth/logout">Logout</a>
+            </div>
+        </nav>
+        <% } %>
